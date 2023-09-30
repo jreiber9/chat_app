@@ -69,7 +69,7 @@ const Start = ({ navigation }) => {
             style={styles.button}
             onPress={() => navigation.navigate('Chat', { name: name, color: color})}
           >
-          <Text style={styles.buttonText}>Start Chatting!</Text>
+          <Text style={styles.buttonText}>Chat Now!</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
