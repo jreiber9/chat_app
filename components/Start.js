@@ -1,36 +1,45 @@
-import { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
+import { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TextInput,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 
-const image = require('../assets/Background-Image.png');
+const image = require("../assets/Background-Image.png");
 
 const backgroundColors = {
-  a: '#090C08',
-  b: '#474056',
-  c: '#8A95A5',
-  d: '#B9C6AE',
+  a: "#090C08",
+  b: "#474056",
+  c: "#8A95A5",
+  d: "#B9C6AE",
 };
 
 const Start = ({ navigation }) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [color, setColor] = useState(backgroundColors);
 
   return (
     <View style={styles.container}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-        <Text style={styles.appTitle}>Chat It Up</Text> 
+        <Text style={styles.appTitle}>Chat It Up</Text>
         <View style={styles.inputContainer}>
           <Text>Hello There!</Text>
           <TextInput
             style={styles.textInput}
             value={name}
             onChangeText={setName}
-            placeholder='Type your username here'
-            placeholderTextColor='#757083'
-          />          
-          <Text style={styles.textColorSelector}>Choose your background color</Text>
+            placeholder="Type your username here"
+            placeholderTextColor="#757083"
+          />
+          <Text style={styles.textColorSelector}>
+            Choose your background color
+          </Text>
           <View style={styles.colorSelector}>
-
-          <TouchableOpacity
+            <TouchableOpacity
               style={[
                 styles.circle,
                 color === backgroundColors.a && styles.selectedCircle,
@@ -62,20 +71,21 @@ const Start = ({ navigation }) => {
               ]}
               onPress={() => setColor(backgroundColors.d)}
             ></TouchableOpacity>
-
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate('Chat', { name: name, color: color})}
+            onPress={() =>
+              navigation.navigate("Chat", { name: name, color: color })
+            }
           >
-          <Text style={styles.buttonText}>Chat Now!</Text>
+            <Text style={styles.buttonText}>Chat Now!</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -83,41 +93,41 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: 'center',
-    padding: '6%',
+    justifyContent: "center",
+    padding: "6%",
   },
   appTitle: {
     flex: 2,
     fontSize: 45,
-    fontWeight: '600',
-    color: '#FFFFFF',
+    fontWeight: "600",
+    color: "#FFFFFF",
   },
   inputContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    padding: '6%',
+    backgroundColor: "#FFFFFF",
+    padding: "6%",
     flexBasis: 160,
   },
   textInput: {
     width: "88%",
     fontSize: 16,
-    fontWeight: '300',
-    color: '#757083',
+    fontWeight: "300",
+    color: "#757083",
     padding: 15,
     borderWidth: 1,
-    borderColor: '#757083',
+    borderColor: "#757083",
     marginTop: 15,
     marginBottom: 15,
   },
   textColorSelector: {
     fontSize: 16,
-    fontWeight: '300',
-    color: '#8A95A5',
+    fontWeight: "300",
+    color: "#8A95A5",
   },
   colorSelector: {
     flex: 1,
-    justifyContent: 'space-around',
-    flexDirection: 'row',
+    justifyContent: "space-around",
+    flexDirection: "row",
   },
   circle: {
     height: 50,
@@ -128,18 +138,18 @@ const styles = StyleSheet.create({
   },
   selectedCircle: {
     borderWidth: 2,
-    borderColor: '#FF0000',
+    borderColor: "#FF0000",
   },
   button: {
-    alignItems: 'center',
-    backgroundColor: '#757083',
+    alignItems: "center",
+    backgroundColor: "#757083",
     padding: 10,
   },
   buttonText: {
-    fontWeight: '600',
+    fontWeight: "600",
     fontSize: 16,
-    color: '#FFFFFF',
-    textAlign: 'center',
+    color: "#FFFFFF",
+    textAlign: "center",
   },
 });
 
