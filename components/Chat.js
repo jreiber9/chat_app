@@ -18,6 +18,7 @@ import {
   onSnapshot,
   QuerySnapshot,
 } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Chat = ({ db, navigation, route }) => {
   const { name, color } = route.params;
