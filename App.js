@@ -1,9 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, LogBox, Alert } from "react-native";
-// import the screens
+import { StyleSheet, Text, View } from "react-native";
 import Start from "./components/Start";
 import Chat from "./components/Chat";
-// import react Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { initializeApp } from "firebase/app";
@@ -12,15 +10,15 @@ import {
   disableNetwork,
   enableNetwork,
 } from "firebase/firestore";
-import { useNetInfo } from "react-native-community/netinfo";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { useEffect } from "react";
-
+import { LogBox, Alert } from "react-native";
 // Create the navigator
 const Stack = createNativeStackNavigator();
 
 const App = () => {
   // tests connection of device
-  const connectionStatus = useNetInfo;
+  const connectionStatus = useNetInfo();
 
   // Your web app's Firebase configuration
 

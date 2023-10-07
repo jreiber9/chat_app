@@ -1,52 +1,43 @@
-import { useLinkProps } from "@react-navigation/native";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Platform,
-  FlatList,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
-import { Bubble, GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import {
   collection,
   query,
   orderBy,
-  getDocs,
-  addDoc,
   onSnapshot,
-  QuerySnapshot,
-} from "firebase/firestore";
+  addDoc,
+} from "firebase/firestore"; // Import Firestore functions
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Chat = ({ db, navigation, route }) => {
-  const { name, color } = route.params;
+const Chat = ({ route, navigation, db, isConnected }) => {
+  const { name, color } = route.params; // Brings name and bg color selected to Chat
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    navigation.setOptions({ title: name });
-    const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
-    const unsubMessages = onSnapshot(q, (docs) => {
-      let newMessages = [];
-      docs.forEach((doc) => {
-        newMessages.push({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: new Date(doc.data().createdAt.toMillis()),
-        });
-      });
-      setMessages(newMessages);
-    });
-    return () => {
-      if (unsubMessages) unsubMessages();
-    };
-  }, []);
+  let unsubMessages;
+
+  const loadCachedMessages = async () => {
+    const cachedMessages = (await AsyncStorage.getItem("messages")) || "[]";
+    setMessages(JSON.parse(cachedMessages));
+  };
+
+  const cacheMessages = async (messages) => {
+    try {
+      await AsyncStorage.setItem("messages", JSON.stringify(messages));
+    } catch (error) {
+      console.error("Error caching messages:", error);
+    }
+  };
 
   const onSend = (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0]);
   };
-
   const renderBubble = (props) => {
     return (
       <Bubble
@@ -63,28 +54,92 @@ const Chat = ({ db, navigation, route }) => {
     );
   };
 
+  const renderInputToolbar = (props) => {
+    if (isConnected) return <InputToolbar {...props} />;
+    else return null;
+  };
+
+  useEffect(() => {
+    navigation.setOptions({ title: name });
+  }, []);
+  useEffect(() => {
+    setMessages([
+      {
+        _id: 1,
+        text: "Hello developer",
+        createdAt: new Date(),
+        user: {
+          _id: 2,
+          name: "React Native",
+          avatar: "https://picsum.photos/140",
+        },
+      },
+      {
+        _id: 2,
+        text: "This is a system message",
+        createdAt: new Date(),
+        system: true,
+      },
+    ]);
+  }, []);
+
+  useEffect(() => {
+    if (isConnected === true) {
+      if (unsubMessages) {
+        unsubMessages();
+      }
+      unsubMessages = null;
+
+      const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+      unsubMessages = onSnapshot(q, (querySnapshot) => {
+        let newMessages = [];
+        querySnapshot.forEach((doc) => {
+          newMessages.push({
+            _id: doc.id,
+            ...doc.data(),
+            createdAt: new Date(doc.data().createdAt.toMillis()),
+          });
+        });
+        setMessages(newMessages);
+        cacheMessages(newMessages); // Cache the new messages
+      });
+    } else {
+      loadCachedMessages();
+    }
+
+    return () => {
+      if (unsubMessages) {
+        unsubMessages();
+      }
+    };
+  }, [db, isConnected]);
+
   return (
     <View style={{ flex: 1, backgroundColor: color }}>
       <GiftedChat
         messages={messages}
         renderBubble={renderBubble}
+        renderInputToolbar={renderInputToolbar}
         onSend={(messages) => onSend(messages)}
         user={{
-          _id: route.params.userId,
-          name: route.params.name,
+          _id: route.params.userId, // Extract the user ID from route.params
+          name: route.params.name, // Extract the name from route.params
         }}
       />
       {Platform.OS === "android" ? (
         <KeyboardAvoidingView behavior="height" />
       ) : null}
+      {Platform.OS === "ios" ? (
+        <KeyboardAvoidingView behavior="padding" />
+      ) : null}
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
-
 export default Chat;

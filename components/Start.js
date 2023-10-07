@@ -24,7 +24,7 @@ const Start = ({ navigation }) => {
       .then((result) => {
         navigation.navigate("Chat", {
           userId: result.user.uid,
-          name,
+          name: name,
           color: color,
         });
         Alert.alert("Signed in Successfully!");
