@@ -32,3 +32,8 @@ This is mobile chatting app that you can use with friends in real time, it offer
 ### Android Studio
 
 To utilize features of the app within the android studio emulator
+
+
+## GitHub Repository
+
+Feel free to check out this projects [Repository](https://github.com/jreiber9/chat_app)
