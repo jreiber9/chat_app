@@ -2,7 +2,7 @@
 
 This is mobile chatting app that you can use with friends in real time, it offers image sharing as well as location sharing.
 
-![Screenshot_1696990030](https://github.com/jreiber9/chat_app/assets/128739362/81ab2f63-7bab-4528-b568-a8c88acb90ea)
+![Screenshot_1696990030](https://github.com/jreiber9/chat_app/assets/128739362/7e58ecfc-4acb-4982-a6c4-bdd17362ee6b)
 
 ## Technology Utilized
 
