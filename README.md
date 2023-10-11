@@ -28,10 +28,13 @@ This is mobile chatting app that you can use with friends in real time, it offer
 
 
 # Create a new project with React Native:
+```shell
 npx create-expo-app chat_app --template
-
+```
 # Install Expo Globally
+```shell
 npm install - expo-cli
+```
 
 ### Database Setup
 
@@ -46,12 +49,12 @@ npm install - expo-cli
 
 To utilize features of the app within the android studio emulator install these libraries in your project directory:
 
+```shell
 expo install expo-image-picker
 expo install react-native-maps
 expo install expo-location
 expo install expo-media-library
-
-
+```
 
 ## GitHub Repository
 
