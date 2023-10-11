@@ -43,7 +43,7 @@ expo start
 
 ### Database Setup
 
-# To set up a database for this project: 
+To set up a database for this project: 
 1. Create and sign-up for a database on https://firebase.google.com/
 2. install firebase in your project directory: npm install firebase
 3. import personal firebase config from project settings tab in firebase console into App.js (replace existing code)
