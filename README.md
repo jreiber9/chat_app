@@ -26,14 +26,19 @@ This is mobile chatting app that you can use with friends in real time, it offer
 
 ## Getting Started
 
-
 Create a new project with React Native:
 ```shell
 npx create-expo-app chat_app --template
 ```
-Install Expo Globally
+
+Install Expo Globally:
 ```shell
 npm install - expo-cli
+```
+
+To startup Expo:
+```shell
+expo start
 ```
 
 ### Database Setup
